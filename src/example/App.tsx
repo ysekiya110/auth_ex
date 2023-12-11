@@ -1,167 +1,186 @@
-import { useState } from "react"
-import {
-  DndContext,
-  DragOverlay,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  DragStartEvent,
-  DragEndEvent,
-  TouchSensor,
-  closestCenter
-} from "@dnd-kit/core"
-import {
-  arrayMove,
-  SortableContext,
-  rectSortingStrategy
-} from "@dnd-kit/sortable"
-import Item from "./components/Item"
-import SortableItem from "./components/SortableItem"
+//import { useState } from 'react'
+//import reactLogo from '../assets/react.svg'
+//import viteLogo from '/vite.svg'
+import Img1 from "../../public/img/img_1.jpg"
+import Img2 from "../../public/img/img_2.jpg"
+import Img3 from "../../public/img/img_3.jpg"
+import Img4 from "../../public/img/img_4.jpg"
+import Img5 from "../../public/img/img_5.jpg"
+import Img6 from "../../public/img/img_6.jpg"
+import Img7 from "../../public/img/img_7.jpg"
+import Img8 from "../../public/img/img_8.jpg"
+import Img9 from "../../public/img/img_9.jpg"
+import Img10 from "../../public/img/img_10.jpg"
+//import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
+import {Draggable} from "./components/Draggable"
+import './App.css'
+import { DndContext } from "@dnd-kit/core"
+//import sqlite3 from 'sqlite3'
 
-export type TItem = {
-  id: number
-  imageUrl: string
-}
+//const db = new sqlite3.Database('/public/user_inf.sqlite3');
 
-const defaultItems = [
-  {
-    id: 2,
-    imageUrl: `https://picsum.photos/id/2/300/200`
-  },
-  {
-    id: 15,
-    imageUrl: `https://picsum.photos/id/15/300/200`
-  },
-  {
-    id: 20,
-    imageUrl: `https://picsum.photos/id/20/300/200`
-  },
-  {
-    id: 24,
-    imageUrl: `https://picsum.photos/id/24/300/200`
-  },
-  {
-    id: 32,
-    imageUrl: `https://picsum.photos/id/13/300/200`
-  },
-  {
-    id: 35,
-    imageUrl: `https://picsum.photos/id/48/300/200`
-  },
-  {
-    id: 39,
-    imageUrl: `https://picsum.photos/id/40/300/200`
-  },
-  {
-    id: 43,
-    imageUrl: `https://picsum.photos/id/43/300/200`
-  },
-  {
-    id: 46,
-    imageUrl: `https://picsum.photos/id/46/300/200`
-  },
-  {
-    id: 52,
-    imageUrl: `https://picsum.photos/id/52/300/200`
-  },
-  {
-    id: 56,
-    imageUrl: `https://picsum.photos/id/60/300/200`
-  }
-]
 
-export default function App() {
-  const [items, setItems] = useState<TItem[]>(defaultItems)
-
-  // for drag overlay
-  const [activeItem, setActiveItem] = useState<TItem>()
-
-  // for input methods detection
-  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor))
-
-  // triggered when dragging starts
-  const handleDragStart = (event: DragStartEvent) => {
-    const { active } = event
-    setActiveItem(items.find((item) => item.id === active.id))
-  }
-
-  // triggered when dragging ends
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event
-    if (!over) return
-
-    const activeItem = items.find((item) => item.id === active.id)
-    const overItem = items.find((item) => item.id === over.id)
-
-    if (!activeItem || !overItem) {
-      return
-    }
-
-    const activeIndex = items.findIndex((item) => item.id === active.id)
-    const overIndex = items.findIndex((item) => item.id === over.id)
-
-    if (activeIndex !== overIndex) {
-      setItems((prev) => arrayMove<TItem>(prev, activeIndex, overIndex))
-    }
-    setActiveItem(undefined)
-  }
-
-  const handleDragCancel = () => {
-    setActiveItem(undefined)
-  }
-
-  const handleButtonClick = () => {
-    const itemIds = items.map((item) => item.id)
-    alert(itemIds)
-  }
+function App() {
+  //const [count, setCount] = useState(0)
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      onDragCancel={handleDragCancel}
-    >
-      <SortableContext items={items} strategy={rectSortingStrategy}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(4, 1fr)`,
-            gridGap: 16,
-            maxWidth: "800px",
-            margin: "16px auto 48px"
-          }}
-        >
-          {items.map((item) => (
-            <SortableItem key={item.id} item={item} />
-          ))}
-        </div>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <button
-            onClick={handleButtonClick}
-            style={{
-              appearance: "none",
-              fontFamily: "inherit",
-              display: "inline-block",
-              border: "0",
-              borderRadius: "5px",
-              background: "#14af21",
-              color: "#fff",
-              padding: "10px 16px",
-              fontSize: "1rem",
-              textDecoration: "none",
-              cursor: "pointer",
-              width: "100%"
-            }}
-          >
-            Save this order
-          </button>
-        </div>
-      </SortableContext>
-      <DragOverlay adjustScale style={{ transformOrigin: "0 0 " }}>
-        {activeItem ? <Item item={activeItem} isDragging /> : null}
-      </DragOverlay>
-    </DndContext>
+    <>
+      <DndContext onDragEnd={null} >
+        <table id="position">
+          <tbody>
+            <tr>
+              <td>
+               1
+              </td>
+                
+              <td>
+               2
+              </td>
+
+              <td>
+                3
+              </td>
+
+              <td>
+                4
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                5
+              </td>
+
+              <td>
+                6
+              </td>
+
+              <td>
+                7
+              </td>
+
+              <td>
+                8
+              </td>
+            </tr>
+            
+            <tr>
+              <td>
+                9
+              </td>
+
+              <td>
+                10
+              </td>
+
+              <td>
+                11
+              </td>
+
+              <td>
+                12
+              </td>
+            </tr>
+            
+            <tr>
+              <td>
+                13
+              </td>
+
+              <td>
+                14
+              </td>
+
+              <td>
+                15
+              </td>
+
+              <td>
+                16
+              </td>
+            </tr>
+          </tbody>
+          
+        </table>
+      
+      
+            <table>
+              
+              <tr>
+                
+                <td>
+                  <Draggable Img={Img1} dragId={1}/>
+                </td>
+                  
+                <td>
+                  <Draggable Img={Img2} dragId={2}/>
+                </td>
+                
+                <td>
+                  <Draggable Img={Img3} dragId={3}/>
+                </td>
+                
+
+              </tr>
+
+              <tr>
+                <td>
+                  <Draggable Img={Img4} dragId={4}/>
+
+                </td>
+                
+
+                <td>
+                  <Draggable Img={Img5} dragId={5}/>
+
+                </td>
+
+                <td>
+                  <Draggable Img={Img6} dragId={6}/>
+
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <Draggable Img={Img7} dragId={7}/>
+
+                </td>
+
+                <td>
+                  <Draggable Img={Img8} dragId={8}/>
+
+                </td>
+
+                <td>
+                  <Draggable Img={Img9} dragId={9}/>
+                  
+                </td>
+
+              </tr>
+
+              <tr>
+                <td>
+                  
+                </td>
+
+                <td>
+                  <Draggable Img={Img10} dragId={10}/>
+
+
+                </td>
+
+                <td>
+                  
+                </td>
+
+              </tr>
+
+            </table>
+            </DndContext>
+    </>
   )
 }
+
+export default App
+

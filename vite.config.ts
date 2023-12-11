@@ -12,7 +12,9 @@ plugins: [react()],
         form2: resolve(__dirname, `src/form2/index.html`),
         form3: resolve(__dirname, `src/form3/index.html`),
         form4: resolve(__dirname, `src/form4/index.html`),
-        example: resolve(__dirname, `src/example/index.html`)
+        form5: resolve(__dirname, `src/form5/index.html`),
+        example: resolve(__dirname, `src/example/index.html`),
+        example1: resolve(__dirname, `src/example1/index.html`)
       }
     }
   },

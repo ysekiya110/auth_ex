@@ -1,4 +1,15 @@
 //import { useState } from 'react'
+//import {DndContext} from "@dnd-kit/core";
+
+
+//import {Box,Stack} from "@mui/material"
+import * as React from 'react';
+import { styled } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import Grid from "@mui/material/Grid"
+import Paper from "@mui/material/Paper"
+//import {Draggable} from "./components/Draggable/Draggable"
+//import {Droppable} from "./components/Droppable/Droppable"
 //import reactLogo from '../assets/react.svg'
 //import viteLogo from '/vite.svg'
 import Img1 from "../../public/img/img_1.jpg"
@@ -18,11 +29,46 @@ import './App.css'
 //const db = new sqlite3.Database('/public/user_inf.sqlite3');
 
 
+const Item = styled(Paper)(({ theme }) => ({
+  textAlign: 'center',
+  padding: '0px',
+  fontSize: '40px',
+  width: '100px',
+  height: '100px'
+
+}));
+
 function App() {
   //const [count, setCount] = useState(0)
+  //const [dropCount, setDropCount] = usestage(0)
 
   return (
     <>
+
+      {/* <Box sx={{flexGrow: 1, backgroundColor: '#a0a0a0', padding: '20px'}}>
+        <Grid container spacing={1}>
+          <Grid item xs={3}>
+            <Item>1</Item>
+          </Grid>
+          <Grid item xs ={3}>
+            <Item>2</Item>
+          </Grid>
+          <Grid item xs ={3}>
+            <Item>3</Item>
+          </Grid>
+          <Grid item xs ={3}>
+            <Item>4</Item>
+          </Grid>
+          <Grid item xs ={3}>
+            <Item>5</Item>
+          </Grid>
+          <Grid item xs ={3}>
+            <Item>6</Item>
+          </Grid>
+        </Grid>
+      </Box> */}
+
+      
       
         <table id="position">
           <tbody>
@@ -107,7 +153,7 @@ function App() {
               <tr>
                 
                     <td>
-                      <Draggable src={Img1} id={1}/>
+                      <img src={Img1} id="img" alt="img_1.jpg"/>
                     </td>
                   
                 <td>
@@ -175,6 +221,7 @@ function App() {
               </tr>
 
             </table>
+ 
           
     </>
   )

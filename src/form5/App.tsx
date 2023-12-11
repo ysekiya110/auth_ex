@@ -1,6 +1,11 @@
-//import { useState } from 'react'
+import { useState } from 'react'
 //import reactLogo from '../assets/react.svg'
 //import viteLogo from '/vite.svg'
+import { DndContext } from "@dnd-kit/core";
+import { Box, Stack } from "@mui/material";
+import { Draggable } from "./components/Draggable/Draggable";
+import { Droppable } from "./components/Droppable/Droppable";
+
 import Img1 from "../../public/img/img_1.jpg"
 import Img2 from "../../public/img/img_2.jpg"
 import Img3 from "../../public/img/img_3.jpg"
@@ -12,10 +17,11 @@ import Img8 from "../../public/img/img_8.jpg"
 import Img9 from "../../public/img/img_9.jpg"
 import Img10 from "../../public/img/img_10.jpg"
 //import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
-import './App.css'
+//import './App.css'
 //import sqlite3 from 'sqlite3'
 
 //const db = new sqlite3.Database('/public/user_inf.sqlite3');
+const [dropCount, setDropCount] = useState(0);
 
 
 function App() {
@@ -23,6 +29,35 @@ function App() {
 
   return (
     <>
+
+      <div className="App">
+            <Box
+              sx={{
+                p: 2
+              }}
+            >
+              <DndContext
+                onDragEnd={(event) => {
+                  const { over } = event;
+                  if (over == null) {
+                    return;
+                  }
+                  setDropCount((x) => x + 1);
+                }}
+              >
+                <Box
+                  sx={{
+                    mb: 5
+                  }}
+                >
+                  <Draggable id="draggableA" label="ドラッグブロック" />
+                </Box>
+                <Droppable id="dropAreaA">{dropCount}回ドロップしたぜ</Droppable>
+              </DndContext>
+            </Box>
+          </div>
+
+    {/*
       
         <table id="position">
           <tbody>
@@ -107,7 +142,7 @@ function App() {
               <tr>
                 
                     <td>
-                      <Draggable src={Img1} id={1}/>
+                      <img src={Img1} id="img" alt="img_1.jpg"/>
                     </td>
                   
                 <td>
@@ -175,6 +210,8 @@ function App() {
               </tr>
 
             </table>
+
+          */}
           
     </>
   )
