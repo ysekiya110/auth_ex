@@ -1,4 +1,4 @@
-//import { useState } from 'react'
+import { useState } from 'react'
 //import reactLogo from '../assets/react.svg'
 //import viteLogo from '/vite.svg'
 import Img1 from "../../public/img/img_1.jpg"
@@ -13,24 +13,55 @@ import Img9 from "../../public/img/img_9.jpg"
 import Img10 from "../../public/img/img_10.jpg"
 //import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 import {Draggable} from "./components/Draggable"
+import {Droppable} from "./components/Droppable"
 import './App.css'
 import { DndContext } from "@dnd-kit/core"
-//import sqlite3 from 'sqlite3'
 
-//const db = new sqlite3.Database('/public/user_inf.sqlite3');
+// const droppableList = [
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+// ];
 
+
+// function handleDragEnd({over}){
+//   setParent(over ? over.id: null);
+// }
 
 function App() {
   //const [count, setCount] = useState(0)
 
+  const [parent, setParent] =useState(null);
+
+  // const draggable ={
+  //   <
+  // }
+
   return (
     <>
       <DndContext onDragEnd={null} >
+        {/* {!parent ? draggable : null} */}
         <table id="position">
           <tbody>
             <tr>
               <td>
-               1
+                1
+               {/* <Droppable dropId={1}>
+                {parent === "droppable" ? draggable : '1'}
+               </Droppable> */}
               </td>
                 
               <td>
@@ -104,7 +135,7 @@ function App() {
         </table>
       
       
-            <table>
+            <table id="images">
               
               <tr>
                 

@@ -1,4 +1,4 @@
-//import { useState } from 'react'
+import { useState } from 'react'
 //import reactLogo from '../assets/react.svg'
 //import viteLogo from '/vite.svg'
 import Img1 from "../../public/img/img_1.jpg"
@@ -12,23 +12,53 @@ import Img8 from "../../public/img/img_8.jpg"
 import Img9 from "../../public/img/img_9.jpg"
 import Img10 from "../../public/img/img_10.jpg"
 //import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
+import {Draggable} from "./components/Draggable"
+import {Droppable} from "./components/Droppable"
 import './App.css'
-//import sqlite3 from 'sqlite3'
+import { DndContext } from "@dnd-kit/core"
 
-//const db = new sqlite3.Database('/public/user_inf.sqlite3');
+// const droppableList = [
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+//   useState<JSX.Element | null>(null),
+// ];
 
+
+// function handleDragEnd({over}){
+//   setParent(over ? over.id: null);
+// }
 
 function App() {
   //const [count, setCount] = useState(0)
 
+  //const [parent, setParent] =useState(null);
+
+
   return (
     <>
-      
+      <DndContext onDragEnd={null} >
+        {/* {!parent ? draggable : null} */}
         <table id="position">
           <tbody>
             <tr>
               <td>
-               1
+                1
+               {/* <Droppable dropId={1}>
+                {parent === "droppable" ? draggable : '1'}
+               </Droppable> */}
               </td>
                 
               <td>
@@ -102,20 +132,20 @@ function App() {
         </table>
       
       
-            <table>
+            <table id="images">
               
               <tr>
                 
-                    <td>
-                      <img src={Img1} id="img" alt="img_1.jpg"/>
-                    </td>
+                <td>
+                  <Draggable Img={Img1} dragId={1}/>
+                </td>
                   
                 <td>
-                  <img src={Img2} id ="img" alt="img_2.jpg"/>
+                  <Draggable Img={Img2} dragId={2}/>
                 </td>
                 
                 <td>
-                  <img src={Img3} id="img" alt="img_3.jpg"/>
+                  <Draggable Img={Img3} dragId={3}/>
                 </td>
                 
 
@@ -123,35 +153,35 @@ function App() {
 
               <tr>
                 <td>
-                  <img src={Img4} id="img" alt="img_4.jpg"/>
+                  <Draggable Img={Img4} dragId={4}/>
 
                 </td>
                 
 
                 <td>
-                  <img src={Img5} id="img" alt="img_5.jpg"/>
+                  <Draggable Img={Img5} dragId={5}/>
 
                 </td>
 
                 <td>
-                  <img src={Img6} id="img" alt="img_6.jpg"/>
+                  <Draggable Img={Img6} dragId={6}/>
 
                 </td>
               </tr>
 
               <tr>
                 <td>
-                  <img src={Img7} id="img" alt="img_7.jpg"/>
+                  <Draggable Img={Img7} dragId={7}/>
 
                 </td>
 
                 <td>
-                  <img src={Img8} id="img" alt="img_8.jpg"/>
+                  <Draggable Img={Img8} dragId={8}/>
 
                 </td>
 
                 <td>
-                  <img src={Img9} id="img" alt="img_9.jpg"/>
+                  <Draggable Img={Img9} dragId={9}/>
                   
                 </td>
 
@@ -163,7 +193,7 @@ function App() {
                 </td>
 
                 <td>
-                  <img src={Img10} id="img" alt="img_10.jpg"/>
+                  <Draggable Img={Img10} dragId={10}/>
 
 
                 </td>
@@ -175,9 +205,10 @@ function App() {
               </tr>
 
             </table>
-          
+            </DndContext>
     </>
   )
 }
 
 export default App
+

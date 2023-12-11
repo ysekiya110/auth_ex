@@ -41,10 +41,11 @@
   color: #888;
 }
 
-#img {
+#dragImg {
   text-align: center;
   width: 100px;
   height: 100px;
+  -webkit-touch-callout: none;
 }
 
 #position{
@@ -61,4 +62,8 @@
   border-top: 1px solid #333;
   width: 60px;
   height: 60px;
+}
+
+#images {
+  margin: 3px auto; 
 }
