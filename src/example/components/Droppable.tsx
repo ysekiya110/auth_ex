@@ -2,12 +2,13 @@
 import React from 'react';
 import {useDroppable} from '@dnd-kit/core';
 
-export function Droppable(props:{dropId:number,children:JSX.Element}) {
+export function Droppable(props:{children:JSX.Element | null , dropId:number}) {
   const {isOver, setNodeRef} = useDroppable({
     id: props.dropId,
   });
   const style = {
-    opacity: isOver ? 1 : 0.5,
+   height: 60,
+   width: 60
   };
 
   return (

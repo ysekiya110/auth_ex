@@ -41,93 +41,135 @@ import { DndContext } from "@dnd-kit/core"
 //   setParent(over ? over.id: null);
 // }
 
+//const modules: Image =[];
+
+
+
 function App() {
+
+
   //const [count, setCount] = useState(0)
 
-  const [parent, setParent] =useState(null);
+  // const [parent, setParent] =useState(null);
 
-  // const draggable ={
-  //   <
-  // }
+  const ImgList = [
+    Img1,
+    Img2,
+    Img3,
+    Img4,
+    Img5,
+    Img6,
+    Img7,
+    Img8,
+    Img9,
+  ];
+
+  const droppableList = [
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+  ];
+
+
+  function handleDragEnd({ active, over }) {
+    console.log(active);
+    if (active && over) {
+      //dragableList[active.id - 1][1](true);
+      droppableList[over.id - 1][1](<img src={ImgList[active.id-1]} style={{ background: "#e9e9e9", width: 60, height: 60 }} />);
+    }
+  }
+
+  
 
   return (
     <>
-      <DndContext onDragEnd={null} >
-        {/* {!parent ? draggable : null} */}
+      <DndContext onDragEnd={handleDragEnd} >
+       
         <table id="position">
           <tbody>
             <tr>
               <td>
-                1
-               {/* <Droppable dropId={1}>
-                {parent === "droppable" ? draggable : '1'}
-               </Droppable> */}
+               <Droppable dropId={1}>{droppableList[0][0]}</Droppable>
+        
               </td>
                 
               <td>
-               2
+               <Droppable dropId={2}>{droppableList[1][0]}</Droppable>
               </td>
 
               <td>
-                3
+                <Droppable dropId={3}>{droppableList[2][0]}</Droppable>
               </td>
 
               <td>
-                4
+                <Droppable dropId={4}>{droppableList[3][0]}</Droppable>
               </td>
             </tr>
 
             <tr>
               <td>
-                5
+                <Droppable dropId={5}>{droppableList[4][0]}</Droppable>
               </td>
 
               <td>
-                6
+                <Droppable dropId={6}>{droppableList[5][0]}</Droppable>
               </td>
 
               <td>
-                7
+                <Droppable dropId={7}>{droppableList[6][0]}</Droppable>
               </td>
 
               <td>
-                8
-              </td>
-            </tr>
-            
-            <tr>
-              <td>
-                9
-              </td>
-
-              <td>
-                10
-              </td>
-
-              <td>
-                11
-              </td>
-
-              <td>
-                12
+                <Droppable dropId={8}>{droppableList[7][0]}</Droppable>
               </td>
             </tr>
             
             <tr>
               <td>
-                13
+                <Droppable dropId={9}>{droppableList[8][0]}</Droppable>
               </td>
 
               <td>
-                14
+                <Droppable dropId={10}>{droppableList[9][0]}</Droppable>
               </td>
 
               <td>
-                15
+                <Droppable dropId={11}>{droppableList[10][0]}</Droppable>
               </td>
 
               <td>
-                16
+                <Droppable dropId={12}>{droppableList[11][0]}</Droppable>
+              </td>
+            </tr>
+            
+            <tr>
+              <td>
+                <Droppable dropId={13}>{droppableList[12][0]}</Droppable>
+              </td>
+
+              <td>
+                <Droppable dropId={14}>{droppableList[13][0]}</Droppable>
+              </td>
+
+              <td>
+                <Droppable dropId={15}>{droppableList[14][0]}</Droppable>
+              </td>
+
+              <td>
+                <Droppable dropId={16}>{droppableList[15][0]}</Droppable>
               </td>
             </tr>
           </tbody>
@@ -135,7 +177,7 @@ function App() {
         </table>
       
       
-            <table id="images">
+        <table id="images">
               
               <tr>
                 
@@ -190,7 +232,7 @@ function App() {
 
               </tr>
 
-              <tr>
+              {/* <tr>
                 <td>
                   
                 </td>
@@ -205,10 +247,11 @@ function App() {
                   
                 </td>
 
-              </tr>
+              </tr> */}
 
-            </table>
-            </DndContext>
+        </table>
+
+      </DndContext>
     </>
   )
 }
