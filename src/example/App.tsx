@@ -16,38 +16,49 @@ import {Droppable} from "./components/Droppable"
 import './App.css'
 import { DndContext } from "@dnd-kit/core"
 
-// const droppableList = [
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-//   useState<JSX.Element | null>(null),
-// ];
-
-
-// function handleDragEnd({over}){
-//   setParent(over ? over.id: null);
-// }
-
 function App() {
-  //const [count, setCount] = useState(0)
 
-  const [parent, setParent] =useState(null);
+  const ImgList = [
+    Img1,
+    Img2,
+    Img3,
+    Img4,
+    Img5,
+    Img6,
+    Img7,
+    Img8,
+    Img9,
+  ];
 
-  // const draggable ={
-  //   <
-  // }
+  const droppableList = [
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+    useState<JSX.Element | null>(null),
+  ];
+
+
+  function handleDragEnd({ active, over }) {
+    console.log(active);
+    if (active && over) {
+      //dragableList[active.id - 1][1](true);
+      droppableList[over.id - 1][1](<img src={ImgList[active.id-1]} style={{ background: "#e9e9e9", width: 60, height: 60 }} />);
+    }
+  }
+
+  
 
   return (
     <>
