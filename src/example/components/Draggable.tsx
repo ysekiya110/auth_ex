@@ -11,7 +11,7 @@ export function Draggable(props:{dragId:number,Img:string}) {
     // Outputs `translate3d(x, y, 0)`
     transform: CSS.Translate.toString(transform),
   };
-
+  // style={ background: "#e9e9e9", margin: 20, width: 300 }
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <img id="dragImg" src={props.Img} alt="img_1.jpg"/>

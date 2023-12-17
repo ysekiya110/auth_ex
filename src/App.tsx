@@ -14,16 +14,23 @@ function Form(props: { id: string, label: string, onChange: (input: string) => v
   )
   }
 
+// function redirectTo(url: string): void {
+//   window.location.href=url;
+// }
+
 function App() {
- const [ln, setLn] = useState("")
- const [fn, setFn] = useState("")
+ const [username, setName] = useState("")
+ 
   return (
     <>
-      <Form id={ "lastname" } label={ "lastname" } onChange={ setLn }/>
-      <Form id={ "firstname" } label={ "firstname" } onChange={ setFn }/>
+      <Form id={ "username" } label={ "username" } onChange={ setName }/>
       <div>
         <button onClick={ () =>
-          fetch(`https://example.com/form?ln=${ ln }&fn=${ fn }`)
+          window.location.href = `http://localhost:5173/src/ohyu/index.html?username=${ username }`
+          // fetch(`http://localhost:5173/src/ohyu/index.html?ln=${username}`)
+          // redirectTo("http://localhost:5173/src/ohyu/index.html?username=${username}")
+          // window.location.href="http://localhost:5173/src/ohyu/index.html?ln=${username}";
+          
         }> SEND
         </button>
       </div>
