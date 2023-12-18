@@ -137,26 +137,40 @@ function App() {
 
   function handleDragOver(event: DragOverEvent) {
     //console.log("aaa")
-    const { active , over} = event;
+    const { active, over } = event;
     // const [Id, setId] =useState(0)
-    // console.log(active.id)
+    console.log(active.id)
     // console.log(over?.id)
     //なぜ?
-    if(over && over?.id !==undefined){
-        const overId: number = over.id
-        const target = document.getElementById('overId');
-        //console.log(overId)
-        // droppableList[overId-1][1](<img src={`/img/img_${active.id}.jpg`} style={{ background: "#e9e9e9", width: 70, height: 70 }} />);
 
-        // target.style.backgroundColor =  "#4040FF";
+    // if (x % 2 ===1){//画像の上下なら
+    //   //縦向きにハイライト
+
+    // }
+    // else{//画像の左右なら
+    //   //横向きにハイライト
+
+    // }
+
+
+    if (over && over?.id !== undefined) {
+      // const posNum: number = over.id
+      // const overId: string = `pos${over.id-100}`
+
+      //const highlight = document.getElementById("");
+      console.log(over.id)
+      //console.log(highlight)
+      // droppableList[overId-1][1](<img src={`/img/img_${active.id}.jpg`} style={{ background: "#e9e9e9", width: 70, height: 70 }} />);
+
+      // hightlight.style.backgroundColor =  "#4040FF";
 
     }
 
 
-    
+
     // droppableList[Id][1](<img src={`/img/img_${active.id}.jpg`} style={{ background: "#e9e9e9", width: 70, height: 70 }} />);
 
-    
+
 
 
 
@@ -206,74 +220,74 @@ function App() {
         <table id="position">
           <tbody>
             <tr>
-              <td>
+              <td id="pos1">
                 <Droppable dropId={101}>{droppableList[0][0]}</Droppable>
 
               </td>
 
-              <td>
+              <td id="pos2">
                 <Droppable dropId={102}>{droppableList[1][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos3">
                 <Droppable dropId={103}>{droppableList[2][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos4">
                 <Droppable dropId={104}>{droppableList[3][0]}</Droppable>
               </td>
             </tr>
 
             <tr>
-              <td>
+              <td id="pos5">
                 <Droppable dropId={105}>{droppableList[4][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos6">
                 <Droppable dropId={106}>{droppableList[5][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos7">
                 <Droppable dropId={107}>{droppableList[6][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos8">
                 <Droppable dropId={108}>{droppableList[7][0]}</Droppable>
               </td>
             </tr>
 
             <tr>
-              <td>
+              <td id="pos9">
                 <Droppable dropId={109}>{droppableList[8][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos10">
                 <Droppable dropId={110}>{droppableList[9][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos11">
                 <Droppable dropId={111}>{droppableList[10][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos12">
                 <Droppable dropId={112}>{droppableList[11][0]}</Droppable>
               </td>
             </tr>
 
             <tr>
-              <td>
+              <td id="pos13">
                 <Droppable dropId={113}>{droppableList[12][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos14">
                 <Droppable dropId={114}>{droppableList[13][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos15">
                 <Droppable dropId={115}>{droppableList[14][0]}</Droppable>
               </td>
 
-              <td>
+              <td id="pos16">
                 <Droppable dropId={116}>{droppableList[15][0]}</Droppable>
               </td>
             </tr>
@@ -340,7 +354,11 @@ function App() {
 
             <tr>
               <td>
-
+                <button onClick={() =>
+                  location.reload()
+                }>
+                  Reset
+                </button>
               </td>
 
               <td>
@@ -369,7 +387,11 @@ function App() {
               <tr>
 
                 <td>
-
+                  <button onClick={() =>
+                    location.reload()
+                  }>
+                    Reset
+                  </button>
                 </td>
 
                 <td>
@@ -378,7 +400,11 @@ function App() {
                 </td>
 
                 <td>
-
+                  <button onClick={() =>
+                    setModal(false)
+                  }>
+                    Back
+                  </button>
                 </td>
 
               </tr>
