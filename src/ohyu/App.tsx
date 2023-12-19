@@ -157,8 +157,8 @@ function App() {
       // const posNum: number = over.id
       // const overId: string = `pos${over.id-100}`
 
-      //const highlight = document.getElementById("");
-      console.log(over.id)
+      const highlight = document.getElementById("over.id");
+      console.log(highlight)
       //console.log(highlight)
       // droppableList[overId-1][1](<img src={`/img/img_${active.id}.jpg`} style={{ background: "#e9e9e9", width: 70, height: 70 }} />);
 

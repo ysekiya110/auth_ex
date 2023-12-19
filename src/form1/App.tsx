@@ -22,9 +22,9 @@ function App() {
   const [username, setName] = useState("")
   const [secret, setSecret] = useState("")
 
-  const queryString = `?username=${encodeURIComponent(username)}&secret=${encodeURIComponent(secret)}`
+  const queryString = `?username=${username}&secret=${secret}`;
 
-  const phpURL = 'http://localhost:5173/src/form1/register.php'
+  const phpURL = 'http://localhost:5173/src/form1/register.php';
 
   return (
     <>
@@ -38,7 +38,11 @@ function App() {
           // window.location.href="http://localhost:5173/src/ohyu/index.html?ln=${username}";
           fetch(`${phpURL}${queryString}` , {
             method: 'GET',
-            credentials: 'include'
+            headers: {
+              'Content-Type' : 'application/json',
+            },
+            credentials: 'include',
+            mode: "cors",
           })
             .then(response => {
               if (!response.ok) {

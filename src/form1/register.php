@@ -1,12 +1,10 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Credentials: true");
+// header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+// header("Access-Control-Allow-Headers: Content-Type");
+// header("Access-Control-Allow-Credentials: true");
 header("Content-Type: text/plain; charset=utf-8");
-header('Content-Type: application/json');
-
 
 $databasePath = './data/user.db';
 
@@ -26,21 +24,29 @@ $query = "CREATE TABLE IF NOT EXISTS users (
 $db->exec($query);
 
 // GETリクエストからデータを取得
-$username = $_GET['username'] ?? '';
-$secret = $_GET['secret'] ?? '';
+$username = isset($_GET['username']) ? $_GET['username'] : '';
+$secret = isset($_GET['secret']) ? $_GET['secret'] : '';
+
 
 // データベースにデータを挿入
 $query = "INSERT INTO users (username, secret) VALUES (:username, :secret)";
 $stmt = $db->prepare($query);
-$stmt->bindParam(':username', $username, SQLITE3_TEXT);
-$stmt->bindParam(':secret', $secret, SQLITE3_TEXT);
+$stmt->bindValue(':username', $username, SQLITE3_TEXT);
+$stmt->bindValue(':secret', $secret, SQLITE3_TEXT);
+
+$response = array(); // Associative array to hold the response data
 
 if ($stmt->execute()) {
-    echo 'Data inserted successfully.';
+    $response['status'] = 'success';
+    $response['message'] = 'Data inserted successfully.';
 } else {
-    echo 'Error inserting data.';
+    $response['status'] = 'error';
+    $response['message'] = 'Error inserting data.';
 }
 
-// データベース接続を閉じる
+// Close the database connection
 $db->close();
+
+// // Send the response as JSON
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
 ?>
