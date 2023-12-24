@@ -24,15 +24,13 @@ import Img4_2 from "../../public/img/img_4_2.jpg"
 
 import Img1_3 from "../../public/img/img_1_3.jpg"
 
-
-
-
 import { ModalImage } from "./components/ModalImage"
-import { Droppable } from "./components/Droppable"
+// import { Droppable } from "./components/Droppable"
 import './App.css'
 import { DndContext, DragOverEvent, DragStartEvent, DragEndEvent } from "@dnd-kit/core"
-import { Modal } from "@fluentui/react"
+import { Modal, Stack } from "@fluentui/react"
 import { Draggable } from './components/Draggable'
+import { useDroppable } from'@dnd-kit/core';
 //import Modal from "react-modal"
 //import { useLocation} from 'react-router-dom';
 
@@ -58,45 +56,21 @@ function App() {
     Img10,
   ];
 
-  const droppableList = [
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-    useState<JSX.Element | null>(null),
-  ];
-
-  // const dragableList = [
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-  //   useState<JSX.Element | null>(null),
-
-  // ];
-
+  let selectedList =[""]
 
   const [username, setName] = useState('');
   const [secret, setSecret] = useState('');
 
   const [modal, setModal] = useState(false);
   const [modalId, setModalId] = useState(0);
+  const [over, setOver] = useState(["0", "0"])
+  const [dragVertical, setDragVertical] = useState(false);
+
+  const [select_1, setSelect_1] = useState(["0", "0"]);
+  const [select_2, setSelect_2] = useState(["0", "0"]);
+  const [select_3, setSelect_3] = useState(["0", "0"]);
+
+  const [selectList, setSelectList] = useState<string[][]>([]);
 
   // const [fetchButton, set] = useState<JSX.Element | null>(null)
 
@@ -124,56 +98,45 @@ function App() {
   //     });
   // });
 
-  function handleDragEnd({ active, over }) {
-    // console.log(active);
-    // console.log(over);
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
     if (active && over) {
-      //dragableList[active.id - 1][1](true);
 
-      droppableList[over.id - 101][1](<img src={`/img/img_${active.id}.jpg`} style={{ background: "#e9e9e9", width: 70, height: 70 }} />);
+
+      if (selectList.length < 3) {
+        const tmp = selectList;
+        tmp.push([String(active.id), String(over.id)]);
+        setSelectList(tmp);
+        // console.log(selectList.length)
+        // console.log(tmp[selectList.length-1])
+      }
       setModal(false)
     }
+    setOver(["0", "0"]);
   }
 
   function handleDragOver(event: DragOverEvent) {
-    //console.log("aaa")
-    const { active, over } = event;
-    // const [Id, setId] =useState(0)
-    console.log(active.id)
-    // console.log(over?.id)
-    //なぜ?
+    const { over } = event;
+    if (over) {
+      setOver(String(over.id).split("_"));
 
-    // if (x % 2 ===1){//画像の上下なら
-    //   //縦向きにハイライト
-
-    // }
-    // else{//画像の左右なら
-    //   //横向きにハイライト
-
-    // }
-
-
-    if (over && over?.id !== undefined) {
-      // const posNum: number = over.id
-      // const overId: string = `pos${over.id-100}`
-
-      const highlight = document.getElementById("over.id");
-      console.log(highlight)
-      //console.log(highlight)
-      // droppableList[overId-1][1](<img src={`/img/img_${active.id}.jpg`} style={{ background: "#e9e9e9", width: 70, height: 70 }} />);
-
-      // hightlight.style.backgroundColor =  "#4040FF";
 
     }
+    //console.log(over)
+  }
+
+  function handleDragStart(event: DragStartEvent) {
+    const { active } = event;
+
+    const id = String(active.id).split("_")[1];
 
 
 
-    // droppableList[Id][1](<img src={`/img/img_${active.id}.jpg`} style={{ background: "#e9e9e9", width: 70, height: 70 }} />);
-
-
-
-
-
+    if (id === "2" || id === "4") {
+      setDragVertical(true);
+    } else {
+      setDragVertical(false);
+    }
   }
 
   function modalEvent(Id: number) {
@@ -181,19 +144,146 @@ function App() {
     setModalId(Id);
   }
 
-  function seledtImage(Id: number) {
+  function DropBack(props: { backId: string, over: string[], select: string[][] }) {//分割画像の場所：画像の配置場所
+    const isOver = props.over.includes(props.backId);
+    let position = ""
+  
+    if (props.select.length > 0) {
+      // const isSelected = props.select[props.select.length - 1][1].split("_").includes(props.backId)
+      const selected = props.select.filter((elem) => elem[1].split("_").includes(props.backId))//3つの画像の配置場所とbackIdが一致しているもの
+      const isSelected = selected.length > 0;//上の条件を満たしたら必ず1になる
+  
+      //objectPositionとobjectFit:"cover"正方形
 
+      // console.log(props.select.map((elem) => elem[1].split("_")).flat())
+
+      selectedList = props.select.map((elem) => elem[1].split("_")).flat()
+
+      // console.log(selectedList)
+      
+      
+  
+      if (isSelected) {
+        const side = selected[0][1].split("_")//必ず1つの要素しかないから0
+
+        
+  
+        if (side[0] === props.backId) {//左か上
+          if (Number(side[1]) - Number(side[0]) === 1) {//横か縦か
+  
+            position = "0% 0%"
+          } else {
+            position = "0% 0%"
+  
+          }
+  
+        } else {//右か下
+          if (Number(side[1]) - Number(side[0]) === 1) {//横か縦か
+            position = " 100% 0%"
+          } else {
+            position = "0% 100%"
+          }
+        }
+  
+        return (
+          <img src={`/img/img_${selected[0][0]}.jpg`} style={{ height: 70, width: 70, objectFit: "cover", objectPosition: position }} />
+        )
+      }
+    }
+  
+    if (isOver) {
+      return (
+        <div style={{ height: 70, width: 70, background: "#4FD8EA99" }} />
+      );
+    } else {
+      return (
+        <div style={{ height: 70, width: 70, background: "#e9e9e9",}}><br/>{props.backId}</div>
+      )
+    }
   }
 
-  const openModal = () => {
-    setModal(true);
-  };
+  function Droppable(props: { dropId: string , select: string[][]}) {//select現在の画像の配置場所
+    const { isOver, over, setNodeRef } = useDroppable({
+      id: props.dropId,
+    });
+  
+    const style = {
+      height: 70,
+      width: 70,
+      background: "#00000000",
+    };
+  
+    // const selected = props.select.filter((elem) => elem[1].split("_").includes(props.dropId.split("_")))
+    const dropId_0 = props.dropId.split("_")[0]
+    const dropId_1 = props.dropId.split("_")[1]
 
-  const closeModal = () => {
-    setModal(false);
-  };
 
+  
+    // console.log(selectedList)
+    // console.log(props.select)
 
+    // console.log(props.select.filter((elem)=> elem[1].split("_").includes(selectedList)))
+    // selectedList.includes(props.select.filter((elem)=> elem[1].split("_")))
+    const isSelected = selectedList.includes(dropId_0) || selectedList.includes(dropId_1)
+
+    if (isSelected){
+      return (
+        <div></div>
+      )
+    }else{
+      return (
+        <div ref={setNodeRef} style={style}></div>
+      )
+    }
+  
+  
+    // if(props.select.length ===0){
+    //   return (
+    //     <div ref={setNodeRef} style={style}></div>
+    //   )
+    // }
+  
+    // const selectId_0 = props.select[props.select.length-1][1].split("_")
+    // const selectId_0 = props.select.filter((elem) => elem[1].split("_"))
+  
+    // console.log(props.select[props.select.length-1][1])
+  
+   
+    
+  
+    // if (selectedList.includes(dropId_0) && selectedList.includes(dropId_1)){
+      
+  
+    //   return (
+    //     <div ref={setNodeRef} style={style}></div>
+    //   )
+    // }else{
+      
+    //   return (
+    //     <div></div>
+    //   )
+    // }
+  
+  
+  
+    // if (Number(dropId_0) !== Number(selectId_0[0]) && Number(dropId_0) !== Number(selectId_0[1]) && Number(dropId_1) !== Number(selectId_0[0]) && Number(dropId_1) !== Number(selectId_0[1]) ){
+      
+    //   // console.log(selectId_0[0])
+    //   // console.log(selectId_0[1])
+      
+     
+  
+    //   return (
+    //     <div ref={setNodeRef} style={style}></div>
+    //   )
+    // }else{
+      
+    //   return (
+    //     <div></div>
+    //   )
+    // }
+  }
+  
 
   return (
     <>
@@ -201,155 +291,107 @@ function App() {
         {(new URL(location.href)).searchParams.get("username")}
       </h3>
 
-      {/* <Modal
-        isOpen={modal === true }
-        isBlocking={false}
-        isModeless={true}
-        onDismiss={() => setModal(false)}
-        onDismissed={() => setModalId(0)}
-      >
-        <DndContext onDragEnd={handleDragEnd}>
-          <Draggable Img={ImgList[modalId-1]} dragId={modalId} />
-        </DndContext>
-          
-      </Modal> */}
+      <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} onDragStart={handleDragStart} >
+        <Stack horizontal horizontalAlign='center' style={{ position: "relative" }}>
+          <Stack verticalAlign='center'>
+            <Stack horizontal horizontalAlign='center'>
+              <DropBack backId={"1"} over={over} select={selectList} />
+              <DropBack backId={"2"} over={over} select={selectList} />
+              <DropBack backId={"3"} over={over} select={selectList} />
+              <DropBack backId={"4"} over={over} select={selectList} />
+            </Stack>
+            <Stack horizontal horizontalAlign='center'>
+              <DropBack backId={"5"} over={over} select={selectList} />
+              <DropBack backId={"6"} over={over} select={selectList} />
+              <DropBack backId={"7"} over={over} select={selectList} />
+              <DropBack backId={"8"} over={over} select={selectList} />
+            </Stack>
+            <Stack horizontal horizontalAlign='center'>
+              <DropBack backId={"9"} over={over} select={selectList} />
+              <DropBack backId={"10"} over={over} select={selectList} />
+              <DropBack backId={"11"} over={over} select={selectList} />
+              <DropBack backId={"12"} over={over} select={selectList} />
+            </Stack>
+            <Stack horizontal horizontalAlign='center'>
+              <DropBack backId={"13"} over={over} select={selectList} />
+              <DropBack backId={"14"} over={over} select={selectList} />
+              <DropBack backId={"15"} over={over} select={selectList} />
+              <DropBack backId={"16"} over={over} select={selectList} />
+            </Stack>
 
+          </Stack>
 
-      <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} >
-
-        <table id="position">
-          <tbody>
-            <tr>
-              <td id="pos1">
-                <Droppable dropId={101}>{droppableList[0][0]}</Droppable>
-
-              </td>
-
-              <td id="pos2">
-                <Droppable dropId={102}>{droppableList[1][0]}</Droppable>
-              </td>
-
-              <td id="pos3">
-                <Droppable dropId={103}>{droppableList[2][0]}</Droppable>
-              </td>
-
-              <td id="pos4">
-                <Droppable dropId={104}>{droppableList[3][0]}</Droppable>
-              </td>
-            </tr>
-
-            <tr>
-              <td id="pos5">
-                <Droppable dropId={105}>{droppableList[4][0]}</Droppable>
-              </td>
-
-              <td id="pos6">
-                <Droppable dropId={106}>{droppableList[5][0]}</Droppable>
-              </td>
-
-              <td id="pos7">
-                <Droppable dropId={107}>{droppableList[6][0]}</Droppable>
-              </td>
-
-              <td id="pos8">
-                <Droppable dropId={108}>{droppableList[7][0]}</Droppable>
-              </td>
-            </tr>
-
-            <tr>
-              <td id="pos9">
-                <Droppable dropId={109}>{droppableList[8][0]}</Droppable>
-              </td>
-
-              <td id="pos10">
-                <Droppable dropId={110}>{droppableList[9][0]}</Droppable>
-              </td>
-
-              <td id="pos11">
-                <Droppable dropId={111}>{droppableList[10][0]}</Droppable>
-              </td>
-
-              <td id="pos12">
-                <Droppable dropId={112}>{droppableList[11][0]}</Droppable>
-              </td>
-            </tr>
-
-            <tr>
-              <td id="pos13">
-                <Droppable dropId={113}>{droppableList[12][0]}</Droppable>
-              </td>
-
-              <td id="pos14">
-                <Droppable dropId={114}>{droppableList[13][0]}</Droppable>
-              </td>
-
-              <td id="pos15">
-                <Droppable dropId={115}>{droppableList[14][0]}</Droppable>
-              </td>
-
-              <td id="pos16">
-                <Droppable dropId={116}>{droppableList[15][0]}</Droppable>
-              </td>
-            </tr>
-          </tbody>
-
-        </table>
+          {dragVertical ?
+            <div style={{ position: 'absolute', top: 35 }}>
+              <table id="position" >
+                <tbody>
+                  <tr>
+                    <td id="pos1"> <Droppable dropId={"1_5"} select={selectList}></Droppable> </td>
+                    <td id="pos2"> <Droppable dropId={"2_6"} select={selectList}></Droppable> </td>
+                    <td id="pos3"> <Droppable dropId={"3_7"} select={selectList}></Droppable> </td>
+                    <td id="pos3"> <Droppable dropId={"4_8"} select={selectList}></Droppable> </td>
+                  </tr>
+                  <tr>
+                    <td id="pos5"> <Droppable dropId={"5_9"} select={selectList}></Droppable> </td>
+                    <td id="pos6"> <Droppable dropId={"6_10"} select={selectList}></Droppable> </td>
+                    <td id="pos7"> <Droppable dropId={"7_11"} select={selectList}></Droppable> </td>
+                    <td id="pos7"> <Droppable dropId={"8_12"} select={selectList}></Droppable> </td>
+                  </tr>
+                  <tr>
+                    <td id="pos9"> <Droppable dropId={"9_13"} select={selectList}></Droppable> </td>
+                    <td id="pos10"> <Droppable dropId={"10_14"} select={selectList}></Droppable> </td>
+                    <td id="pos11"> <Droppable dropId={"11_15"} select={selectList}></Droppable> </td>
+                    <td id="pos11"> <Droppable dropId={"12_16"} select={selectList}></Droppable> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            :
+            <div style={{ position: 'absolute' }}>
+              <table id="position" >
+                <tbody>
+                  <tr>
+                    <td id="pos1"> <Droppable dropId={"1_2"} select={selectList}></Droppable> </td>
+                    <td id="pos2"> <Droppable dropId={"2_3"} select={selectList}></Droppable> </td>
+                    <td id="pos3"> <Droppable dropId={"3_4"} select={selectList}></Droppable> </td>
+                  </tr>
+                  <tr>
+                    <td id="pos5"> <Droppable dropId={"5_6"} select={selectList}></Droppable> </td>
+                    <td id="pos6"> <Droppable dropId={"6_7"} select={selectList}></Droppable> </td>
+                    <td id="pos7"> <Droppable dropId={"7_8"} select={selectList}></Droppable> </td>
+                  </tr>
+                  <tr>
+                    <td id="pos9"> <Droppable dropId={"9_10"} select={selectList}></Droppable> </td>
+                    <td id="pos10"> <Droppable dropId={"10_11"} select={selectList}></Droppable> </td>
+                    <td id="pos11"> <Droppable dropId={"11_12"} select={selectList}></Droppable> </td>
+                  </tr>
+                  <tr>
+                    <td id="pos13"> <Droppable dropId={"13_14"} select={selectList}></Droppable> </td>
+                    <td id="pos14"> <Droppable dropId={"14_15"} select={selectList}></Droppable> </td>
+                    <td id="pos15"> <Droppable dropId={"15_16"} select={selectList}></Droppable> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          }
+        </Stack>
 
         {!modal ?
           <table id="images">
-
             <tr>
-
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_1.jpg"} dragId={1} />
-
-              </td>
-
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_2.jpg"} dragId={2} />
-              </td>
-
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_3.jpg"} dragId={3} />
-              </td>
-
-
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_1.jpg"} dragId={1} /> </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_2.jpg"} dragId={2} /> </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_3.jpg"} dragId={3} /> </td>
             </tr>
-
             <tr>
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_4.jpg"} dragId={4} />
-
-              </td>
-
-
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_5.jpg"} dragId={5} />
-
-              </td>
-
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_6.jpg"} dragId={6} />
-
-              </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_4.jpg"} dragId={4} /> </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_5.jpg"} dragId={5} /> </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_6.jpg"} dragId={6} /> </td>
             </tr>
-
             <tr>
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_7.jpg"} dragId={7} />
-
-              </td>
-
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_8.jpg"} dragId={8} />
-
-              </td>
-
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_9.jpg"} dragId={9} />
-
-              </td>
-
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_7.jpg"} dragId={7} /> </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_8.jpg"} dragId={8} /> </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_9.jpg"} dragId={9} /> </td>
             </tr>
 
             <tr>
@@ -361,11 +403,7 @@ function App() {
                 </button>
               </td>
 
-              <td>
-                <ModalImage onClick={modalEvent} Img={"/img/img_10.jpg"} dragId={10} />
-
-
-              </td>
+              <td> <ModalImage onClick={modalEvent} Img={"/img/img_10.jpg"} dragId={10} /> </td>
 
               <td>
                 <button onClick={() =>
@@ -373,10 +411,7 @@ function App() {
                   // fetch('https://localhost:5173/src/ohyu/register.php?username=${username}&secret=${secret}')
                 }>Next
                 </button>
-
-
               </td>
-
             </tr>
 
           </table>
@@ -394,10 +429,7 @@ function App() {
                   </button>
                 </td>
 
-                <td>
-                  <Draggable dragId={`${modalId}_1`} Width={140} Height={70} />
-                  {/* //dragId={modalId} */}
-                </td>
+                <td> <Draggable dragId={`${modalId}_1`} Width={140} Height={70} /> </td>
 
                 <td>
                   <button onClick={() =>
@@ -406,37 +438,18 @@ function App() {
                     Back
                   </button>
                 </td>
-
               </tr>
 
               <tr>
-                <td>
-                  <Draggable dragId={`${modalId}_4`} Width={70} Height={140} />
-
-                </td>
-
-                <td>
-                  <img src={`/img/img_${modalId}.jpg`} style={{ background: "#e9e9e9", margin: 20, width: 140, height: 140, }} />
-                </td>
-
-                <td>
-                  <Draggable dragId={`${modalId}_2`} Width={70} Height={140} />
-
-                </td>
+                <td> <Draggable dragId={`${modalId}_4`} Width={70} Height={140} /> </td>
+                <td> <img src={`/img/img_${modalId}.jpg`} style={{ background: "#e9e9e9", margin: 20, width: 140, height: 140, }} /> </td>
+                <td> <Draggable dragId={`${modalId}_2`} Width={70} Height={140} /> </td>
               </tr>
 
               <tr>
-                <td>
-
-                </td>
-
-                <td>
-                  <Draggable dragId={`${modalId}_3`} Width={140} Height={70} />
-
-                </td>
-                <td>
-
-                </td>
+                <td> </td>
+                <td> <Draggable dragId={`${modalId}_3`} Width={140} Height={70} /> </td>
+                <td> </td>
               </tr>
             </table>
           </div>
@@ -446,6 +459,8 @@ function App() {
     </>
   )
 }
+
+
 
 export default App
 
