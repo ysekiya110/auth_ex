@@ -283,6 +283,14 @@ function App() {
     //   )
     // }
   }
+
+  function NextButton(){
+    if (selectList.length === 3){
+      console.log(selectList)
+    }else{
+      console.log("No")
+    }
+  }
   
 
   return (
@@ -406,8 +414,8 @@ function App() {
               <td> <ModalImage onClick={modalEvent} Img={"/img/img_10.jpg"} dragId={10} /> </td>
 
               <td>
-                <button onClick={() =>
-                  console.log(searchParams.get('username'))
+                <button onClick={NextButton
+                  // console.log(selectList)//秘密情報
                   // fetch('https://localhost:5173/src/ohyu/register.php?username=${username}&secret=${secret}')
                 }>Next
                 </button>
