@@ -4,23 +4,23 @@ import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-plugins: [react()],
+  plugins: [react()],
+  base: "/~ysekiya/auth_ex1/",
+  publicDir: "public/~ysekiya/auth_ex1/",
   build: {
     rollupOptions: {
       input: {
-        // form1: resolve(__dirname, `src/form1/index.html`),
-        // form2: resolve(__dirname, `src/form2/index.html`),
-        // form3: resolve(__dirname, `src/form3/index.html`),
-        // form4: resolve(__dirname, `src/form4/index.html`),
-        // form5: resolve(__dirname, `src/form5/index.html`),
-        // example: resolve(__dirname, `src/example/index.html`),
-        // example1: resolve(__dirname, `src/example1/index.html`)
+        auth: resolve(__dirname, 'src/ysekiya/index.html'),
+        inputUser: resolve(__dirname, 'src/inputUser/index.html'),
       }
-    }
+    },
+    outDir: 'auth_ex1',
   },
 
-  server:{
+  server: {
     host: "0.0.0.0"
-  }
-  
+  },
+
+
+
 })

@@ -27,7 +27,7 @@ export function Draggable(props:{dragId:string, Width: number, Height: number}) 
          <img 
          style={{background: "#e9e9e9", width:props.Width, height:props.Height,}} 
          id="dragImg" 
-         src={`/img/img_${props.dragId}.jpg`} 
+         src={`/~ysekiya/auth_ex1/img/img_${props.dragId}.jpg`} 
          alt="img_1.jpg" />
        </div>
    
