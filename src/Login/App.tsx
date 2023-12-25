@@ -244,7 +244,7 @@ function App() {
       const name = (new URL(location.href)).searchParams.get("username");
       if (name !== null) {
        
-        fetch(`http://www.az.lab.uec.ac.jp/~ysekiya/register/register.php?username=${name}&secret=${selectList.flat()}`)
+        fetch(`http://www.az.lab.uec.ac.jp/~ysekiya/register/Login.php?username=${name}&secret=${selectList.flat()}`)
           .then((response) => response.json())
           .then((data) => console.log(data))
           .catch((error) => console.log(error))
@@ -381,7 +381,7 @@ function App() {
                 <button onClick={NextButton
                   // console.log(selectList)//秘密情報
                   // fetch('http://www.az.lab.uec.ac.jp/~ysekiya/register/register.php?username=${username}&secret=${secret}')
-                }>Next
+                }>Login
                 </button>
               </td>
             </tr>

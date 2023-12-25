@@ -27,13 +27,23 @@ function App() {
       <div>
         <button onClick={ () =>
           window.location.href = `../ysekiya/index.html?username=${ username }`
-          // fetch(`http://localhost:5173/src/ohyu/index.html?ln=${username}`)
-          // redirectTo("http://localhost:5173/src/ohyu/index.html?username=${username}")
-          // window.location.href="http://localhost:5173/src/ohyu/index.html?ln=${username}";
           
-        }> SEND
+          
+        }> Register
         </button>
       </div>
+
+      <Form id={ "username" } label={ "username" } onChange={ setName }/>
+      <div>
+        <button onClick={ () =>
+          window.location.href = `../Login/index.html?username=${ username }`
+          
+          
+        }> Login
+        </button>
+      </div>
+
+
     </>
   )
 }

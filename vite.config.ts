@@ -12,6 +12,7 @@ export default defineConfig({
       input: {
         auth: resolve(__dirname, 'src/ysekiya/index.html'),
         inputUser: resolve(__dirname, 'src/inputUser/index.html'),
+        Login: resolve(__dirname, 'src/Login/index.html'),
       }
     },
     outDir: 'auth_ex1',
