@@ -40,3 +40,28 @@
 .read-the-docs {
   color: #888;
 }
+
+#username {
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  
+}
+
+button {
+  margin: 10px;
+  width: 100px;
+  height: 60px;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 12px; /* パディングを増やしてボタンを大きくする */
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease; /* ホバー時のトランジションを追加 */
+}

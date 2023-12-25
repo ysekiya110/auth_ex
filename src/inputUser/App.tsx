@@ -14,33 +14,39 @@ function Form(props: { id: string, label: string, onChange: (input: string) => v
   )
   }
 
-// function redirectTo(url: string): void {
-//   window.location.href=url;
-// }
 
 function App() {
  const [username, setName] = useState("")
+
+ function Register(){
+  if(username === ""){
+    console.log("a")
+  }else{
+    window.location.href = `../ysekiya/index.html?username=${ username }`
+  }
+ }
+
+ function Login(){
+  if(username === ""){
+    console.log("a")
+  }else{
+    window.location.href = `../Login/index.html?username=${ username }`
+  }
+ }
+ 
  
   return (
     <>
-      <Form id={ "username" } label={ "username" } onChange={ setName }/>
+      <h3>ユーザ名を記入してください</h3>
+      <Form id={ "username" } label={ "" } onChange={ setName }/>
+      
       <div>
-        <button onClick={ () =>
-          window.location.href = `../ysekiya/index.html?username=${ username }`
-          
-          
-        }> Register
-        </button>
+        <button onClick={Register}> Register </button>
       </div>
 
-      <Form id={ "username" } label={ "username" } onChange={ setName }/>
+      
       <div>
-        <button onClick={ () =>
-          window.location.href = `../Login/index.html?username=${ username }`
-          
-          
-        }> Login
-        </button>
+        <button onClick={Login}> Login </button>
       </div>
 
 
